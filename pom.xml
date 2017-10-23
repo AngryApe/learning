@@ -12,6 +12,30 @@
         <module>dubboserver</module>
         <module>dubboclient</module>
         <module>dubbointerface</module>
+        <module>mybatisgenerator</module>
+        <module>zktest</module>
+        <module>utils</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
