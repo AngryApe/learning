@@ -7,6 +7,9 @@ import com.ape.jstorm.bolt.WordCountBolt;
 import com.ape.jstorm.bolt.WordReaderBolt;
 import com.ape.jstorm.spout.WordReaderSpout;
 
+/**
+ * 主类
+ */
 public class JstormTest {
     public static void main(String[] args) {
         TopologyBuilder builder = new TopologyBuilder();
