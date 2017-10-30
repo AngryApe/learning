@@ -15,6 +15,7 @@
         <module>mybatisgenerator</module>
         <module>zktest</module>
         <module>utils</module>
+        <module>jstormtest</module>
     </modules>
 
     <dependencies>
@@ -24,6 +25,16 @@
             <version>2.9.9</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.alibaba.jstorm</groupId>
+                <artifactId>jstorm-core</artifactId>
+                <version>2.2.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

@@ -16,6 +16,4 @@ public class PageResult<T extends Collection> extends Result implements Serializ
 
     private int total;
 
-
-
 }
