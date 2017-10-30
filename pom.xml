@@ -15,8 +15,17 @@
         <module>mybatisgenerator</module>
         <module>zktest</module>
         <module>utils</module>
+        <module>jstorm</module>
         <module>jstormtest</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
