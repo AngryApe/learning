@@ -17,6 +17,8 @@
         <module>utils</module>
         <module>jstorm</module>
         <module>jstormtest</module>
+        <module>jython</module>
+        <module>redis</module>
     </modules>
 
     <repositories>
@@ -42,6 +44,12 @@
                 <artifactId>jstorm-core</artifactId>
                 <version>2.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.python</groupId>
+                <artifactId>jython</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
