@@ -13,12 +13,13 @@ import com.ape.jstorm.spout.WordReaderSpout;
 public class JstormTest {
     public static void main(String[] args) {
         TopologyBuilder builder = new TopologyBuilder();
-        builder.setSpout("word-reader", new WordReaderSpout());
-        builder.setBolt("word-normalizer", new WordReaderBolt()).shuffleGrouping("word-reader");
+        builder.setSpout("word-reader", new WordReaderSpout(),2);
+        builder.setBolt("word-normalizer", new WordReaderBolt(),2).shuffleGrouping("word-reader");
         builder.setBolt("word-counter", new WordCountBolt(),2).shuffleGrouping("","word-normalizer");
 
         Config conf = new Config();
         conf.put("wordFilePath", "wordCount.txt");
+        conf.setNumWorkers();
         conf.setDebug(true);
 
         LocalCluster cluster = new LocalCluster();
