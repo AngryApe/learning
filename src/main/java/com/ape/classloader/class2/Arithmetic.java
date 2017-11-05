@@ -1,7 +1,5 @@
 package com.ape.classloader.class2;
 
-import com.ape.utils.CommonUtils;
-
 import java.util.List;
 
 /**
@@ -10,7 +8,7 @@ import java.util.List;
 public class Arithmetic {
 
     public static Double max(Double max, List<Double> numbers) {
-        if (CommonUtils.isEmpty(numbers) || max == null)
+        if (numbers == null || numbers.isEmpty() || max == null)
             return null;
         for (Double number : numbers) {
             if (number == null)
@@ -22,7 +20,7 @@ public class Arithmetic {
     }
 
     public static Double min(Double min, List<Double> numbers) {
-        if (CommonUtils.isEmpty(numbers) || min == null)
+        if (numbers == null || numbers.isEmpty() || min == null)
             return null;
         for (Double number : numbers) {
             if (number == null)

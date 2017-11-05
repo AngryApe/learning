@@ -19,7 +19,7 @@ public class JstormTest {
 
         Config conf = new Config();
         conf.put("wordFilePath", "wordCount.txt");
-        conf.setNumWorkers();
+        conf.setNumWorkers(1);
         conf.setDebug(true);
 
         LocalCluster cluster = new LocalCluster();
