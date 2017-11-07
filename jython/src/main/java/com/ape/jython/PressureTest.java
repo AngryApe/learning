@@ -1,5 +1,6 @@
 package com.ape.jython;
 
+import com.ape.groovy.GroovyInvoker;
 import com.ape.utils.CommonUtils;
 
 /**
@@ -10,24 +11,38 @@ public class PressureTest {
     private static int CYCLE_TIMES = 10_000_000;
 
     public static void main(String[] args) {
+//        System.out.println(pythonInvoker.call("testInstance"));
+//        pythonInvoker.call("setVar",3);
+//        System.out.println(pythonInvoker.call("testInstance"));
+        new PressureTest().test1();
 
-        PythonInvoker pythonInvoker = new PythonInvoker();
-
-        System.out.println(pythonInvoker.call("testInstance"));
-        pythonInvoker.call("setVar",3);
-        System.out.println(pythonInvoker.call("testInstance"));
     }
 
-    public void test1(PythonInvoker pythonInvoker){
+    public void test1(){
+        System.out.println("Start testing...");
+        PythonInvoker pythonInvoker = new PythonInvoker();
+        GroovyInvoker groovyInvoker = new GroovyInvoker();
         Long start = System.currentTimeMillis();
         double temp = 0;
         for (int i = 0; i < CYCLE_TIMES; i++) {
             Double d1 = Math.random() * 10000;
             Double d2 = Math.random() * 10000;
-            temp = testFunction(temp, i);
+            temp = testFunction(d1, d2);
         }
         System.out.println(temp);
-        CommonUtils.methodCost(start, "Java Inner Invoke");
+        start = CommonUtils.methodCost(start, "Java Invoke");
+
+        temp = 0;
+        for (int i = 0; i < CYCLE_TIMES; i++) {
+            Double d1 = Math.random() * 10000;
+            Double d2 = Math.random() * 10000;
+            Object[] para = new Object[]{d1,d2};
+            String result = groovyInvoker.invoke("testFunction", para).toString();
+            temp = Double.valueOf(result);
+        }
+        System.out.println(temp);
+        start = CommonUtils.methodCost(start, "Groovy Invoke");
+
         temp = 0;
         for (int i = 0; i < CYCLE_TIMES; i++) {
             Double d1 = Math.random() * 10000;
@@ -36,7 +51,9 @@ public class PressureTest {
             temp = Double.valueOf(result);
         }
         System.out.println(temp);
-        CommonUtils.methodCost(start, "Jython Inner Invoke");
+        CommonUtils.methodCost(start, "Jython Invoke");
+
+
     }
 
     private static double add(double a, double b) {

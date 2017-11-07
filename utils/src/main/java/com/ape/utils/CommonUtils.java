@@ -56,16 +56,16 @@ public class CommonUtils {
     }
 
     /*---------------------方法内部性能调试----------------*/
-    public static void methodCost(Long start, String methodName, StringBuilder sb) {
+    public static Long methodCost(Long start, String methodName, StringBuilder sb) {
         Long tEnd = System.currentTimeMillis();
         sb.append(methodName + " execute cost time " + (tEnd - start) + " ms\n");
-        start = tEnd;
+        return tEnd;
     }
 
-    public static void methodCost(Long start, String methodName) {
+    public static Long methodCost(Long start, String methodName) {
         Long tEnd = System.currentTimeMillis();
         System.out.println(methodName + " execute cost time " + (tEnd - start) + " ms\n");
-        start = tEnd;
+        return tEnd;
     }
 
     /*---------------------系统相关----------------------*/

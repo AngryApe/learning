@@ -38,7 +38,7 @@ public class PythonInvoker {
         PythonInterpreter.initialize(preprops, props, new String[0]);
         interpreter = new PythonInterpreter();
         interpreter.exec("import sys");
-        interpreter.exec("print sys.path");
+//        interpreter.exec("print sys.path");
         try {
             interpreter.execfile(PythonInvoker.class.getClassLoader().getResource("script/test.py")
                     .openStream());
