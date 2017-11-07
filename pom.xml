@@ -15,9 +15,9 @@
         <module>zktest</module>
         <module>utils</module>
         <module>jstorm</module>
-        <module>jstormtest</module>
         <module>jython</module>
         <module>redis</module>
+        <module>netty</module>
     </modules>
 
     <repositories>
