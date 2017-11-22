@@ -14,5 +14,6 @@ public class PyConfiguration extends HashMap<String,String>{
         this.put("testFunction","testFunction");
         this.put("testInstance","testInstance");
         this.put("setVar","setVar");
+        this.put("execute","execute");
     }
 }

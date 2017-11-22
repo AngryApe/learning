@@ -1,9 +1,7 @@
 package com.ape.utils;
 
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * AngryApe created at 2017/10/12
@@ -33,6 +31,17 @@ public class CommonUtils {
     public static String listToSqlString(List<String> list) {
         return listToString(list, ",", "'", "'");
     }
+    /*--------------------Map 操作---------------------*/
+
+    /**
+     * 向 value 为List<String> 的map中添加值
+     */
+    public static <K, V> void addMapList(Map<K, List<V>> map, K key, V value) {
+        if (!map.containsKey(key)) {
+            map.put(key, new ArrayList<>());
+        }
+        map.get(key).add(value);
+    }
 
     /*---------------------非空判断-----------------------*/
     public static boolean isEmpty(String str) {
@@ -56,6 +65,10 @@ public class CommonUtils {
     }
 
     /*---------------------方法内部性能调试----------------*/
+
+    /**
+     * 需要将调试信息统一输出时使用
+     */
     public static Long methodCost(Long start, String methodName, StringBuilder sb) {
         Long tEnd = System.currentTimeMillis();
         sb.append(methodName + " execute cost time " + (tEnd - start) + " ms\n");
@@ -87,14 +100,15 @@ public class CommonUtils {
     }
 
     public static void main(String[] args) {
-        List<String> metrics = new ArrayList<>();
-        metrics.add("02010100");
-        metrics.add("02010200");
-        metrics.add("02010300");
-        metrics.add("02020100");
-        System.out.println(listToString(metrics, "==", "<", ">"));
-        System.out.println(listToString(metrics));
-        System.out.println(listToSqlString(metrics));
-        System.out.println("You are " + (isDebug() ? "debugging" : "running") + " now.");
+        Map<String, List<Integer>> map = new HashMap<>();
+        CommonUtils.addMapList(map, "key1", 1);
+        CommonUtils.addMapList(map, "key1", 2);
+        CommonUtils.addMapList(map, "key2", 3);
+        CommonUtils.addMapList(map, "key3", 4);
+        CommonUtils.addMapList(map, "key1", 5);
+        CommonUtils.addMapList(map, "key2", 6);
+        CommonUtils.addMapList(map, "key1", 7);
+        CommonUtils.addMapList(map, "key3", 8);
+        map.forEach((key, list) -> System.out.println(key + list));
     }
 }

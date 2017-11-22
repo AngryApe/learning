@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true" monitoring="autodetect"
+         dynamicConfig="true">
+    <!--<diskStore path="java.io.tmpdir"/>-->
+
+    <!--<transactionManagerLookup-->
+            <!--class="net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup"-->
+            <!--properties="jndiName=java:/TransactionManager" propertySeparator=";"/>-->
+
+    <!--<cacheManagerEventListenerFactory class="" properties=""/>-->
+
+    <!--<terracottaConfig url="localhost:9510"/>-->
+
+    <defaultCache maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1200"
+                  timeToLiveSeconds="1200">
+    </defaultCache>
+
+    <cache name="ape"
+           maxElementsInMemory="2000000"
+           maxEntriesLocalDisk="0"
+           eternal="false"
+           overflowToDisk="true"
+           diskSpoolBufferSizeMB="200"
+           diskPersistent="true"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="3600"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <cache name="sampleCache2" maxEntriesLocalHeap="1000" eternal="true"
+           memoryStoreEvictionPolicy="FIFO"/>
+
+    <cache name="sampleCache3" maxEntriesLocalHeap="500" eternal="false" overflowToDisk="true"
+           diskPersistent="true" timeToIdleSeconds="300" timeToLiveSeconds="600"/>
+
+    <cache name="sampleTerracottaCache" maxBytesLocalHeap="10m" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="1800">
+    </cache>
+
+</ehcache>

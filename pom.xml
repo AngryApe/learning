@@ -18,6 +18,8 @@
         <module>jython</module>
         <module>redis</module>
         <module>netty</module>
+        <module>test</module>
+        <module>spring</module>
     </modules>
 
     <repositories>
@@ -42,7 +44,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>RELEASE</version>
+            <version>5.0.1.RELEASE</version>
         </dependency>
     </dependencies>
 

@@ -26,8 +26,8 @@ public class WordCountBolt implements IRichBolt {
     @Override
     public void execute(Tuple tuple) {
         String str = tuple.getString(0);
-        /**
-         * 如果单词尚不存在于map，我们就创建一个，如果已在，我们就为它加1
+        /*
+          如果单词尚不存在于map，我们就创建一个，如果已在，我们就为它加1
          */
         if (!counters.containsKey(str)) {
             counters.put(str, 1);

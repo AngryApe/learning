@@ -47,8 +47,8 @@ public class PressureTest {
         for (int i = 0; i < CYCLE_TIMES; i++) {
             Double d1 = Math.random() * 10000;
             Double d2 = Math.random() * 10000;
-            String result = pythonInvoker.call("testFunction", d1, d2).toString();
-            temp = Double.valueOf(result);
+//            String result = pythonInvoker.call("execute", d1, d2).toString();
+//            temp = Double.valueOf(result);
         }
         System.out.println(temp);
         CommonUtils.methodCost(start, "Jython Invoke");

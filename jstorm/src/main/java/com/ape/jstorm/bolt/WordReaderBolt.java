@@ -16,7 +16,7 @@ public class WordReaderBolt extends BaseRichBolt {
     private TopologyContext context;
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
-        this.context = context;
+        this.context = topologyContext;
         this.outputCollector = outputCollector;
     }
 
