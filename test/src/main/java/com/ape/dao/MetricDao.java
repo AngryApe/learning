@@ -9,6 +9,7 @@ import com.ape.utils.PinyinUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import powercloud.IoTPlatform.coderGenerator.CoderGenerator;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class MetricDao extends BaseDao {
 
     public List<Metric> getAll() {
         System.out.println("Start query data.");
-        String hql = "from Metric";
+        String hql = "from Metric where disabled=0 ";
         Query query = getSession().createQuery(hql);
         List<Metric> list = query.list();
         System.out.println("End query data.");
@@ -39,8 +40,10 @@ public class MetricDao extends BaseDao {
         System.out.println("Start clean data.");
         List<Metric> list = getAll();
         if (CommonUtils.isNotEmpty(list)) {
-            list.forEach(
-                    m -> m.setPy(PinyinUtil.getFirstLettersLowerCase(m.getName()).toLowerCase()));
+            list.forEach(m -> {
+//                m.setPy(PinyinUtil.getFirstLettersLowerCase(m.getName()).toLowerCase());
+                m.setCode(CoderGenerator.getMetricCode('1'));
+            });
             update(list);
         }
         System.out.println("End clean data.");

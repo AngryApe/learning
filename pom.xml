@@ -9,10 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>dubboserver</module>
-        <module>dubboclient</module>
-        <module>dubbointerface</module>
-        <module>zktest</module>
         <module>utils</module>
         <module>jstorm</module>
         <module>jython</module>
@@ -20,6 +16,7 @@
         <module>netty</module>
         <module>test</module>
         <module>spring</module>
+        <module>functions</module>
     </modules>
 
     <repositories>
@@ -37,14 +34,14 @@
             <version>2.9.9</version>
         </dependency>
         <dependency>
-            <groupId>com.ape</groupId>
-            <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>5.0.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ape</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

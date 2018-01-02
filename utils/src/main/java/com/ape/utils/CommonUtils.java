@@ -100,15 +100,11 @@ public class CommonUtils {
     }
 
     public static void main(String[] args) {
-        Map<String, List<Integer>> map = new HashMap<>();
-        CommonUtils.addMapList(map, "key1", 1);
-        CommonUtils.addMapList(map, "key1", 2);
-        CommonUtils.addMapList(map, "key2", 3);
-        CommonUtils.addMapList(map, "key3", 4);
-        CommonUtils.addMapList(map, "key1", 5);
-        CommonUtils.addMapList(map, "key2", 6);
-        CommonUtils.addMapList(map, "key1", 7);
-        CommonUtils.addMapList(map, "key3", 8);
-        map.forEach((key, list) -> System.out.println(key + list));
+        String str = "日最大需量   Max 当前有功需量";
+        String[] splitStr = str.split("\\s+");
+        for (String s : splitStr) {
+            System.out.println(s);
+        }
+        System.out.println(splitStr);
     }
 }

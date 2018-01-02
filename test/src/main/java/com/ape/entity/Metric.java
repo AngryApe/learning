@@ -13,11 +13,11 @@ import java.io.Serializable;
  * AngryApe created at 2017-11-21
  */
 @Entity
-@Table(name = "t_busi_metric_item_logic")
+@Table(name = "t_busi_metric_item")
 public class Metric implements Serializable {
 
     @Id
-    private int id;
+    private Integer id;
 
     @Column
     private String code;
@@ -30,27 +30,47 @@ public class Metric implements Serializable {
     @Column
     private String unit;
     @Column
+    private Integer type;
+    @Column
+    private Integer belong;
+    @Column
     private String resolution;
     @Column
-    private int nature;
+    private Integer nature;
     @Column
-    private int discounted;
-    @Column
-    private int disalarmed;
+    private Integer discounted;
+    @Column(name = "disalarmed")
+    private Integer disAlarmed;
     @Column
     private String owner;
     @Column
-    private int disabled;
+    private Integer disabled;
     @Column
     private String memo;
-    @Column(name = "code_3")
+    @Column(name = "origin_code")
     private String code3;
 
-    public int getId() {
+    public Integer getBelong() {
+        return belong;
+    }
+
+    public void setBelong(Integer belong) {
+        this.belong = belong;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -102,28 +122,28 @@ public class Metric implements Serializable {
         this.resolution = resolution;
     }
 
-    public int getNature() {
+    public Integer getNature() {
         return nature;
     }
 
-    public void setNature(int nature) {
+    public void setNature(Integer nature) {
         this.nature = nature;
     }
 
-    public int getDiscounted() {
+    public Integer getDiscounted() {
         return discounted;
     }
 
-    public void setDiscounted(int discounted) {
+    public void setDiscounted(Integer discounted) {
         this.discounted = discounted;
     }
 
-    public int getDisalarmed() {
-        return disalarmed;
+    public Integer getDisAlarmed() {
+        return disAlarmed;
     }
 
-    public void setDisalarmed(int disalarmed) {
-        this.disalarmed = disalarmed;
+    public void setDisAlarmed(Integer disAlarmed) {
+        this.disAlarmed = disAlarmed;
     }
 
     public String getOwner() {
@@ -134,11 +154,11 @@ public class Metric implements Serializable {
         this.owner = owner;
     }
 
-    public int getDisabled() {
+    public Integer getDisabled() {
         return disabled;
     }
 
-    public void setDisabled(int disabled) {
+    public void setDisabled(Integer disabled) {
         this.disabled = disabled;
     }
 

@@ -3,7 +3,7 @@
  */
 package com.ape.test.database;
 
-import com.ape.dao.MetricDao;
+import com.ape.service.MetricService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,10 +19,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MySqlTest {
 
     @Autowired
-    private MetricDao metricDao;
+    private MetricService metricService;
 
     @Test
     public void metricPyReplace() {
-        Assert.assertEquals(140, metricDao.cleanData());
+        Assert.assertEquals(377, metricService.cleanData());
+    }
+
+    @Test
+    public void metricGenerate(){
+        try {
+            metricService.generateData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(true);
     }
 }
