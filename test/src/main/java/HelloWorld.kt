@@ -242,16 +242,27 @@ val rectangle = Rectangle(5, 2)
 /**
  * 扩展函数（动态语言的特点之一）
  */
-fun Int.Increment(step: Int = 1){
-     this.and(step)
+fun Int.Increment(step: Int = 1) {
+    this.and(step)
 }//为Int类型增加一个Increment函数，之后就可以使用该函数了
 
-fun testIntExtend(){
+fun testIntExtend() {
     var sum = 0
-    for (i in 1..10){
+    for (i in 1..10) {
         sum.Increment(2)
     }
     println(sum)
+}
+
+/**
+ * 空检查
+ */
+fun nullCheck(obj: Any?) {
+    var a = obj?.toString()// ? = if not null
+    var b = obj ?: "" //?: = if null = if not null and else
+    var map = mapOf(Pair(1,"aaa"), Pair(2,"bbb"),"ccc" to 3)
+    val c = map[1]?:throw Exception("key 1 is not exist.") // if null execute a statement
+
 }
 
 
