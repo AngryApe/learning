@@ -10,10 +10,10 @@ import java.net.UnknownHostException;
 import java.util.concurrent.locks.ReentrantLock;
 
 public final class SparkleWrapper {
-    private long lastTime = 0L;
-    private long lastSeqNo = 0L;
-    private long currentSeqNo = 0L;
-    private volatile ReentrantLock mutexEx = new ReentrantLock();
+    private static volatile long lastTime = 0L;
+    private static volatile long lastSeqNo = 0L;
+    private static volatile long currentSeqNo = 0L;
+    private static volatile ReentrantLock mutexEx = new ReentrantLock();
 
     public SparkleWrapper() {
     }
@@ -23,15 +23,15 @@ public final class SparkleWrapper {
         return tempLength / 8;
     }
 
-    public final long getSequence() {
-        return _getSequence();
+    public static final long getSequence() {
+        return _getSequence2();
     }
 
-    public final long getSequenceInMilliSecond() {
+    public static final long getSequenceInMilliSecond() {
         long tmp = 0L;
 
         while (true) {
-            tmp = _getSequence();
+            tmp = _getSequence2();
             if (tmp == 1L) {
                 return tmp;
             }
@@ -112,21 +112,18 @@ public final class SparkleWrapper {
 
     private final long _getSequence() throws ExistException {
 //        System.out.println(Thread.currentThread().getName()+"_"+mutexEx.hashCode());
-        long sequenceNo = 1L;
-        long currentTime = TimeUtility.getTimeSeconds();
+        long sequenceNo = 0L;
         mutexEx.lock();
+        long currentTime = TimeUtility.getTimeSeconds();
         try {
             if (lastTime == currentTime) {
-                if (currentSeqNo == 65536L) {
+                if (lastSeqNo == 65536L) {
                     throw new SpillOverException("current sequence N.O. " + Long.toString(currentSeqNo) + " is overflow!");
                 }
-
-                lastSeqNo = (long) (currentSeqNo++);
-                sequenceNo = currentSeqNo;
+                sequenceNo = ++lastSeqNo;
             } else {
                 lastTime = currentTime;
-                currentSeqNo = 1L;
-                lastSeqNo = 0L;
+                lastSeqNo = sequenceNo;
             }
             return currentTime * 100000 + sequenceNo;
         } finally {
@@ -134,4 +131,43 @@ public final class SparkleWrapper {
         }
 
     }
+
+    public static final long _getSequence2() throws platform.util.common.ExistException {
+        long sequenceNo = 1L;
+        long currentTime = platform.util.common.TimeUtility.getTimeSeconds();
+        if (lastTime == currentTime) {
+            try {
+                mutexEx.lock();
+                if (lastTime == currentTime) {
+                    if (currentSeqNo == 65536L) {
+                        throw new platform.util.common.SpillOverException("current sequence N.O. " + Long.toString(currentSeqNo) + " is overflow!");
+                    }
+
+                    lastSeqNo = (long)(currentSeqNo++);
+                    sequenceNo = currentSeqNo;
+                } else {
+                    lastTime = currentTime;
+                    currentSeqNo = 1L;
+                    lastSeqNo = 0L;
+                }
+            } finally {
+                mutexEx.unlock();
+            }
+        } else {
+            try {
+                mutexEx.lock();
+                lastTime = currentTime;
+                currentSeqNo = 1L;
+                lastSeqNo = 0L;
+            } finally {
+                mutexEx.unlock();
+            }
+        }
+        if(sequenceNo==1){
+            System.out.println("_getSequence2:"+currentTime+" "+lastSeqNo);
+        }
+        return sequenceNo;
+    }
+
+
 }

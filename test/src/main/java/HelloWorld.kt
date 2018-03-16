@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     whenTest(null)
     rangeTest()
     testIntExtend()
+    stringTest()
 }
 
 /**
@@ -243,7 +244,8 @@ val rectangle = Rectangle(5, 2)
  * 扩展函数（动态语言的特点之一）
  */
 fun Int.Increment(step: Int = 1) {
-    this.and(step)
+    val result = this.and(step)
+
 }//为Int类型增加一个Increment函数，之后就可以使用该函数了
 
 fun testIntExtend() {
@@ -260,13 +262,36 @@ fun testIntExtend() {
 fun nullCheck(obj: Any?) {
     var a = obj?.toString()// ? = if not null
     var b = obj ?: "" //?: = if null = if not null and else
-    var map = mapOf(Pair(1,"aaa"), Pair(2,"bbb"),"ccc" to 3)
-    val c = map[1]?:throw Exception("key 1 is not exist.") // if null execute a statement
+    var map = mapOf(Pair(1, "aaa"), Pair(2, "bbb"), "ccc" to 3)
+    val c = map[1] ?: throw Exception("key 1 is not exist.") // if null execute a statement
 
 }
 
+fun stringTest() {
+    val str1 = """
+        |Tell me and I forget.
+|Teach me and I remember.
+        |Involve me and I learn.
+        |(Benjamin Franklin)
+        """
+    println(str1.trimMargin())
+    val str2 = """
+        ^Tell me and I forget.
+        ^Teach me and I remember.
+        ^Involve me and I learn.
+        ^(Benjamin Franklin)
+        """
+    println(str2.trimMargin())
+    println(str2.trimMargin("^"))
+    var test = ApeTest("")
+    test.displayName
+}
 
 
+open class ApeTest(name: String? = "test") : Any() {
+    var count = 1
+    internal var displayName: String = ""
+}
 
-
+var test = ApeTest()
 

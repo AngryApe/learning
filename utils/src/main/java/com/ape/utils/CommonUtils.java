@@ -100,11 +100,13 @@ public class CommonUtils {
     }
 
     public static void main(String[] args) {
-        String str = "日最大需量   Max 当前有功需量";
-        String[] splitStr = str.split("\\s+");
-        for (String s : splitStr) {
-            System.out.println(s);
-        }
-        System.out.println(splitStr);
+//        String str = "日最大需量   Max 当前有功需量";
+//        String[] splitStr = str.split("\\s+");
+//        for (String s : splitStr) {
+//            System.out.println(s);
+//        }
+//        System.out.println(splitStr);
+
+        System.out.println("SERVICE_PATROL_NODE_ID".toLowerCase().replaceAll("(?:_|node|id|service)",""));
     }
 }
