@@ -17,6 +17,8 @@
         <module>test</module>
         <module>spring</module>
         <module>functions</module>
+        <module>kafka</module>
+        <module>dubbo</module>
     </modules>
 
     <repositories>

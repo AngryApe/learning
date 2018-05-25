@@ -3,11 +3,10 @@
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="${package}.dao.${tableName}Dao">
 
-    <resultMap id="resultMap" type="${packageName}.dto.${tableName}Entity">
+    <resultMap id="resultMap" type="${package}.dto.${tableName}Entity">
         <#if columns??>
             <#list columns as column>
-                <result property="${column.columnName}" column="${column.columnName}"
-                        jdbcType="${column.jdbcType}"></result>
+        <result property="${column.columnName}" column="${column.columnName}" jdbcType="${column.jdbcType}"/>
             </#list>
         </#if>
     </resultMap>
@@ -16,50 +15,83 @@
         <#if columns??>
             <#list columns as column>
                 <#if column?is_last>
-                    ${column.columnName}
+        ${column.columnName}
                 <#else >
-                    ${column.columnName},
+        ${column.columnName},
                 </#if>
-
             </#list>
         </#if>
     </sql>
 
+<#-- single entity save -->
     <insert id="save">
-        insert into <include refid="tableName"/> (<include refid="columns"/>) values
+        insert into
+        <include refid="tableName"/>
+        (<include refid="columns"/>) values
         (
         <#if columns??>
             <#list columns as column>
-                ${r'#{entity'+'.'+column.columnName+'}'}
+                <#if column?is_last>
+            ${r'#{entity'+'.'+column.columnName+'}'}
+                <#else >
+            ${r'#{entity'+'.'+column.columnName+'}'},
+                </#if>
             </#list>
         </#if>
         )
     </insert>
-    
-    <insert id="insertBatch">
-        insert into <include refid="tableName"/> (<include refid="columns"/>) values
-        <foreach collection="entities" open="(" close=")" item="entity" separator=",">
 
-        </foreach>,
+<#-- mutipule entity save -->
+    <insert id="insertBatch">
+        insert into
+        <include refid="tableName"/>
+        (<include refid="columns"/>) values
+        <foreach collection="entities" open="(" close=")" item="entity" separator=",">
+        (
+            <#if columns??>
+                <#list columns as column>
+                    <#if column?is_last>
+            ${r'#{entity'+'.'+column.columnName+'}'}
+                    <#else >
+            ${r'#{entity'+'.'+column.columnName+'}'},
+                    </#if>
+                </#list>
+            </#if>
+        )
+        </foreach>
     </insert>
 
+<#-- get entity by key -->
     <select id="getByKey" resultMap="resultMap">
-        select <include refid="columns"/> from <include refid="tableName"/>
+        select <include refid="columns"/>
+        from <include refid="tableName"/>
+        where ${keyName} = ${r'#{key}'}
     </select>
 
-    <select id="findDTOById" parameterType="String" resultMap="${tableName}DTOResultMap">
-        <include refid="findDtoSql"></include>
-        <where>
-            and t.id = ${r'#{id}'}
-        </where>
-    </select>
+<#-- update entity -->
+    <update id="update" parameterType="${package}.entity.${entityName}">
+        update
+        <include refid="tableName"/>
+        set
+        <#if columns??>
+            <#list columns as column>
+                <#if column.columnName != keyName>
+                    <#if column?is_last>
+            ${column.columnName} = ${r'#{entity'+'.'+column.columnName+'}'}
+                    <#else >
+                        ${r'#{entity'+'.'+column.columnName+'}'},
+                    </#if>
+                </#if>
+            </#list>
+        </#if>
+        where ${keyName} = ${r'#{entity'+'.'+ keyField +'}'},
+    </update>
 
-    <select id="find${tableName}Page" parameterType="${packageName}.dto.${tableName}DTO"
-            resultMap="${tableName}DTOResultMap">
-        <include refid="findDtoSql"/>
-        <where>
-
-        </where>
-    </select>
+<#-- delete entity by key -->
+    <update id="deleteByKey">
+        update
+        <include refid="tableName"/>
+        set ${deleteColumn}=1 where ${deleteColumn}=0 and ${keyName}=${r'#{key}'}
+    </update>
 
 </mapper>

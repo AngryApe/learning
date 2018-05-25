@@ -29,11 +29,12 @@ public class ColumnMeta {
     }
 
     public ColumnMeta(String columnName, String jdbcType, String fieldName,
-            String comment) {
+            String comment,String javaType) {
         this.columnName = columnName;
         this.jdbcType = jdbcType;
         this.fieldName = fieldName;
         this.comment = comment;
+        this.javaType = javaType;
     }
 
     public String getComment() {
@@ -68,10 +69,18 @@ public class ColumnMeta {
         this.fieldName = fieldName;
     }
 
+    public String getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(String javaType) {
+        this.javaType = javaType;
+    }
+
     @Override
     public String toString() {
-        return "ColumnMeta{" + "columnName='" + columnName + '\'' + ", jdbcType='" + jdbcType
-                + '\'' + ", fieldName='" + fieldName + '\'' + ", comment='" + comment
-                + '\'' + '}';
+        return "ColumnMeta{" + "columnName='" + columnName + '\'' + ", jdbcType='" + jdbcType + '\''
+                + ", fieldName='" + fieldName + '\'' + ", comment='" + comment + '\''
+                + ", javaType='" + javaType + '\'' + '}';
     }
 }

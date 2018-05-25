@@ -1,7 +1,10 @@
 package com.ape.utils;
 
 import java.lang.management.ManagementFactory;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * AngryApe created at 2017/10/12
@@ -99,14 +102,20 @@ public class CommonUtils {
         return isDebug;
     }
 
-    public static void main(String[] args) {
-//        String str = "日最大需量   Max 当前有功需量";
-//        String[] splitStr = str.split("\\s+");
-//        for (String s : splitStr) {
-//            System.out.println(s);
-//        }
-//        System.out.println(splitStr);
+    public static double rangeRandom(double from, double to) {
+        double band = to - from;
+        return Math.random() * band + from;
+    }
 
-        System.out.println("SERVICE_PATROL_NODE_ID".toLowerCase().replaceAll("(?:_|node|id|service)",""));
+    public static void main(String[] args) {
+        //        String str = "日最大需量   Max 当前有功需量";
+        //        String[] splitStr = str.split("\\s+");
+        //        for (String s : splitStr) {
+        //            System.out.println(s);
+        //        }
+        //        System.out.println(splitStr);
+
+        System.out.println(
+                "SERVICE_PATROL_NODE_ID".toLowerCase().replaceAll("(?:_|node|id|service)", ""));
     }
 }

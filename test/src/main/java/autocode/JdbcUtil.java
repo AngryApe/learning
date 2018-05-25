@@ -21,9 +21,9 @@ public class JdbcUtil {
             while (res.next()) {
                 String columnName = res.getString("COLUMN_NAME");
                 String dataType = res.getString("TYPE_NAME");
-                String remarks = res.getString("REMARKS");
+                String remarks = res.getString("REMARKS").replace("\r\n", "\t");
                 ColumnMeta column = new ColumnMeta(columnName, dataType,
-                        parseColumnName(columnName), remarks);
+                        parseColumnName(columnName), remarks, jdbc2JavaType(dataType));
                 columns.add(column);
                 //                res.getMetaData().getColumnClassName()
                 System.out.println(column);

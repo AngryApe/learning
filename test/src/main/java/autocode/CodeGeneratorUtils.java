@@ -28,7 +28,8 @@ public class CodeGeneratorUtils {
     private final String USER = "cms";
     private final String PASSWORD = "Cms123";
     private final String DRIVER = "com.mysql.jdbc.Driver";
-    private final String diskPath = "D://test";
+    private final String diskPath = "D://test/";
+    private final String deleteColumn = "disabled";
     private final String changeTableName = replaceUnderLineAndUpperCase(tableName);
 
     public Connection getConnection() throws Exception {
@@ -42,6 +43,19 @@ public class CodeGeneratorUtils {
         codeGeneratorUtils.generate();
     }
 
+    public CodeGeneratorUtils() {
+        init();
+    }
+
+    public void init() {
+        File path = new File(diskPath);
+        if (!path.exists()) {
+            if (path.mkdirs()) {
+                System.out.println("create path [] successfully !");
+            }
+        }
+    }
+
     public void generate() throws Exception {
         try {
             Connection connection = getConnection();
@@ -52,8 +66,17 @@ public class CodeGeneratorUtils {
             JdbcUtil.parseColumns(resultSet, columns, classes);
             resultSet = databaseMetaData.getPrimaryKeys(null, null, tableName);
             String key = JdbcUtil.getKey(resultSet);
+            // 构造 freemarker 变量
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("package", packageName);
+            dataMap.put("columns", columns);
+            dataMap.put("tableName", tableName);
+            dataMap.put("entityName", changeTableName);
+            dataMap.put("keyName", key);
+            dataMap.put("keyField", JdbcUtil.parseColumnName(key));
+            dataMap.put("deleteColumn", deleteColumn);
             //生成Mapper文件
-            generateMapperFile(resultSet);
+            generateMapperFile(dataMap);
             //生成Dao文件
             generateDaoFile(resultSet);
             //生成Repository文件
@@ -93,8 +116,8 @@ public class CodeGeneratorUtils {
             //获取字段类型
             columnMeta.setJdbcType(resultSet.getString("TYPE_NAME"));
             //转换字段名称，如 sys_name 变成 SysName
-            columnMeta.setFieldName(
-                    replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
+            columnMeta
+                    .setFieldName(replaceUnderLineAndUpperCase(resultSet.getString("COLUMN_NAME")));
             //字段在数据库的注释
             columnMeta.setComment(resultSet.getString("REMARKS"));
             columnMetaList.add(columnMeta);
@@ -161,13 +184,11 @@ public class CodeGeneratorUtils {
 
     }
 
-    private void generateMapperFile(ResultSet resultSet) throws Exception {
+    private void generateMapperFile(Map<String, Object> dataMap) throws Exception {
         final String suffix = "Mapper.xml";
         final String path = diskPath + changeTableName + suffix;
         final String templateName = "Mapper.ftl";
         File mapperFile = new File(path);
-        Map<String, Object> dataMap = new HashMap<>();
-
         generateFileByTemplate(templateName, mapperFile, dataMap);
 
     }
